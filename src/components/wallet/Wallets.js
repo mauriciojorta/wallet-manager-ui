@@ -50,7 +50,7 @@ export default class Wallets extends Component {
                         </div>
                         <div className="col-md-6">
                         <Link to={`/transfer/?email=${this.state.email}&wallet=${wallet.hash}`}>
-                          <button type="button" class="btn btn-primary">Make a transfer</button>
+                          <button type="button" className="btn btn-primary">Make a transfer</button>
                           </Link>
                         </div>
                       </div>

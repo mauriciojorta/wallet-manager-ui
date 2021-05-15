@@ -67,6 +67,7 @@ export default class Transfer extends Component {
                             const walletFromParam = options.filter(walletOption => walletOption.value === wallet);
                             this.setState({
                                 sender: { label: email, value: email },
+                                senderOptions: customerOptions,
                                 senderSelected: true,
                                 senderWalletOptions: options,
                                 senderHash: walletFromParam[0],

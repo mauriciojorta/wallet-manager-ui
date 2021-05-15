@@ -44,7 +44,7 @@ class Customers extends Component {
             </thead>
             <tbody>
               {this.state.customers.map(customer => (
-                <tr key={customer.id}>
+                <tr key={customer.email}>
                   <td>
                     {customer.name} 
                   </td>

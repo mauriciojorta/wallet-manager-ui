@@ -134,7 +134,9 @@ export default class Transfer extends Component {
         this.setState({ recipientHash: { label: wallet, value: walletParts[0] }, recipientWalletSelected: true });
     }
 
-    validateForm = () => {
+    submitForm = (e) => {
+        e.preventDefault();
+
         let formIsInvalid = false
 
         if (!this.state.senderSelected || !this.state.recipientSelected) {
@@ -157,12 +159,10 @@ export default class Transfer extends Component {
             formIsInvalid = true;
         }
 
-        this.setState( {invalidForm: formIsInvalid });
+        this.setState( {invalidForm: formIsInvalid, transferError: false, transferSuccess: false }, this.transferFunds);
     }
 
-    transferFunds = (e) => {
-        e.preventDefault();
-        this.validateForm();
+    transferFunds = () => {
         if (!this.state.invalidForm) {
             WalletManagerAPI.transferFunds(this.state.senderHash.value, this.state.recipientHash.value, this.state.transferFunds.replace(",", "."))
                 .then(res => {
@@ -177,7 +177,7 @@ export default class Transfer extends Component {
                             })
                             .catch(console.log)
                     } else {
-                        this.setState({ transferError: true });
+                        this.setState({ transferError: true, transferSuccess: false });
                     }
                 });
         } else {
@@ -187,7 +187,7 @@ export default class Transfer extends Component {
     }
 
     resetFormValues = () => {
-        this.setState({ ...initialFormValues });
+        this.setState({ ...initialFormValues, ...validationFlags });
     }
 
     render() {
@@ -215,7 +215,7 @@ export default class Transfer extends Component {
                             </h2>
                         </div>
                     </div>
-                    <form onSubmit={this.transferFunds}>
+                    <form onSubmit={this.submitForm}>
                         <div className="form-group">
                             <label htmlFor="sender">Select sender</label>
                             <Select

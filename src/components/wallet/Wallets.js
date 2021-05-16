@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import Spinner from '../layout/Spinner';
 
-import WalletManagerApi from '../../api/WalletManagerAPI';
+import WalletManagerAPI from '../../api/WalletManagerAPI';
 
 import { Link } from 'react-router-dom';
 
@@ -16,7 +16,7 @@ export default class Wallets extends Component {
 
         const params = new URLSearchParams(this.props.location.search); 
         const email = params.get('email');
-        WalletManagerApi.getWalletsOfCustomer(email)
+        WalletManagerAPI.getWalletsOfCustomer(email)
             .then(res => res.json())
             .then((data) => {
                 this.setState({ wallets: data, email: email})

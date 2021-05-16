@@ -1,6 +1,6 @@
 import React, { Component } from 'react'
 
-import WalletManagerApi from '../../api/WalletManagerAPI';
+import WalletManagerAPI from '../../api/WalletManagerAPI';
 import Select from 'react-select';
 import AsyncSelect from 'react-select'
 
@@ -54,13 +54,13 @@ export default class Transfer extends Component {
 
         let customerOptions = {};
 
-        WalletManagerApi.getAllCustomers()
+        WalletManagerAPI.getAllCustomers()
             .then(res => res.json())
             .then((data) => {
                 const options = data.map(customer => { return { value: customer.email, label: customer.email } });
                 customerOptions = options;
                 if (email && wallet) {
-                    WalletManagerApi.getWalletsOfCustomer(email)
+                    WalletManagerAPI.getWalletsOfCustomer(email)
                         .then(res => res.json())
                         .then((data) => {
                             const options = data.map(wallet => { return { value: (wallet.hash), label: wallet.hash + ' - ' + wallet.balance + ' €' } });
@@ -84,7 +84,7 @@ export default class Transfer extends Component {
     }
 
     getCustomerWallets = (email, isSender) => {
-        WalletManagerApi.getWalletsOfCustomer(email)
+        WalletManagerAPI.getWalletsOfCustomer(email)
             .then(res => res.json())
             .then((data) => {
                 const options = data.map(wallet => { return { value: (wallet.hash), label: wallet.hash + ' - ' + wallet.balance + ' €' } });
@@ -164,12 +164,12 @@ export default class Transfer extends Component {
         e.preventDefault();
         this.validateForm();
         if (!this.state.invalidForm) {
-            WalletManagerApi.transferFunds(this.state.senderHash.value, this.state.recipientHash.value, this.state.transferFunds.replace(",", "."))
+            WalletManagerAPI.transferFunds(this.state.senderHash.value, this.state.recipientHash.value, this.state.transferFunds.replace(",", "."))
                 .then(res => {
                     if (res.status === 200) {
                         this.resetFormValues();
                         this.setState({ transferSuccess: true, transferError: false });
-                        WalletManagerApi.getAllCustomers()
+                        WalletManagerAPI.getAllCustomers()
                             .then(res => res.json())
                             .then((data) => {
                                 const options = data.map(customer => { return { value: customer.email, label: customer.email } });

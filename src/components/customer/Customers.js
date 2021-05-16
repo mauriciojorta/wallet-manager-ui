@@ -3,7 +3,7 @@ import { Link } from 'react-router-dom';
 
 import Spinner from '../layout/Spinner';
 
-import WalletManagerApi from '../../api/WalletManagerAPI';
+import WalletManagerAPI from '../../api/WalletManagerAPI';
 
 class Customers extends Component {
   state = {
@@ -11,7 +11,7 @@ class Customers extends Component {
   };
 
   componentDidMount() {
-    WalletManagerApi.getAllCustomers()
+    WalletManagerAPI.getAllCustomers()
     .then(res => res.json())
     .then((data) => {
       this.setState({ customers: data })
